@@ -1,6 +1,6 @@
-package Day2;
+package day2;
 	import java.util.Scanner;
-	public class Task4 {
+	public class Day2_MP {
 	    public static boolean isPalindrome(String str) {
 	        str = str.toLowerCase().replaceAll("[^a-z0-9]", "");
             int left = 0;
@@ -28,4 +28,3 @@ package Day2;
 	        scanner.close();
 	    }
 	}
-

@@ -1,6 +1,6 @@
 package Day1;
 	import java.util.Scanner;
-	public class Task4 {
+	public class Day1_MP {
 	    private static final int MAX_SIZE = 10;
 	    private static int[] array = new int[MAX_SIZE];
 	    private static int size = 0;

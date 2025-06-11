@@ -8,7 +8,7 @@ package day3;
 	        this.next = null;
 	    }
 	}
-	public class Task4 {
+	public class Day3_MP {
 	    public static ListNode reverse(ListNode head) {
 	        ListNode prev = null;
 	        ListNode current = head;
