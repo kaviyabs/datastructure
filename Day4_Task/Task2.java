@@ -1,56 +1,63 @@
 package day4;
-public class Task2 {
+	import java.util.Scanner;
+	public class Task2 {
 	    static class Node {
 	        int data;
 	        Node next, prev;
-	        Node(int data) { this.data = data; }
+	        Node(int data) {
+	            this.data = data;
+	        }
 	    }
-	    static class DoublyLinkedList {
-	        Node head;
-	        public void insertAtEnd(int data) {
-	            Node newNode = new Node(data);
-	            if (head == null) { head = newNode; return; }
-	            Node current = head;
-	            while (current.next != null) current = current.next;
-	            current.next = newNode;
-	            newNode.prev = current;
+	    private Node head, tail;
+	    private int size = 0;
+	    public void insert(int data) {
+	        Node newNode = new Node(data);
+	        if (head == null) head = tail = newNode;
+	        else {
+	            tail.next = newNode;
+	            newNode.prev = tail;
+	            tail = newNode;
 	        }
-	        public void insertAtMiddle(int data) {
-	            Node newNode = new Node(data);
-	            if (head == null) { head = newNode; return; }
-	            Node slow = head, fast = head;
-	            while (fast != null && fast.next != null) {
-	                fast = fast.next.next;
-	                slow = slow.next;
-	            }
-	            if (slow != null) {
-	                newNode.next = slow;
-	                newNode.prev = slow.prev;
-	                if (slow.prev != null) {
-	                    slow.prev.next = newNode;
-	                } else {
-	                    head = newNode; 
-	                }
-	                slow.prev = newNode;
-	            }
-	        }	  
-	        public void printList() {
-	            Node current = head;
-	            System.out.print("Doubly Linked List: ");
-	            while (current != null) {
-	                System.out.print(current.data + (current.next != null ? " , " : ""));
-	                current = current.next;
-	            }
-	            System.out.println();
+	        size++;
+	    }
+	    public void insertAtMiddle(int data) {
+	        Node newNode = new Node(data);
+	        if (head == null) {
+	            head = tail = newNode;
+	        } else {
+	            int mid = size / 2;
+	            Node curr = head;
+	            for (int i = 0; i < mid; i++) curr = curr.next;
+	            newNode.next = curr;
+	            newNode.prev = curr.prev;
+	            if (curr.prev != null)
+	                curr.prev.next = newNode;
+	            else
+	                head = newNode;
+	            curr.prev = newNode;
 	        }
+	        size++;
+	    }
+	    public void traverse() {
+	        Node curr = head;
+	        while (curr != null) {
+	            System.out.print(curr.data + " ");
+	            curr = curr.next;
+	        }
+	        System.out.println();
 	    }
 	    public static void main(String[] args) {
-	        DoublyLinkedList list = new DoublyLinkedList();
-	        list.insertAtEnd(10);
-	        list.insertAtEnd(20);
-	        list.insertAtEnd(30);
-	        list.insertAtMiddle(25);
-            list.printList();
+	        Task2 list = new Task2();
+	        Scanner sc = new Scanner(System.in);
+	        System.out.print("Number of elements: ");
+	        int n = sc.nextInt();
+	        for (int i = 0; i < n; i++) {
+	            list.insert(sc.nextInt());
+	        }
+	        System.out.print("Insert value at middle: ");
+	        list.insertAtMiddle(sc.nextInt());
+	        System.out.print("List after insertion: ");
+	        list.traverse();
+	        sc.close();
 	    }
 	}
-

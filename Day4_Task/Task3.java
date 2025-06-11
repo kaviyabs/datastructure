@@ -1,61 +1,63 @@
 package day4;
-	class Node {
-	    int data;
-	    Node next, prev;
+	import java.util.Scanner;
 
-	    Node(int data) {
-	        this.data = data;
+	public class Task3 {
+
+	    static class Node {
+	        int data;
+	        Node next, prev;
+	        Node(int data) { this.data = data; }
 	    }
-	}
-	class DoublyLinkedList {
-	    Node head;
+	    private Node head, tail;
+	    private int size = 0;
 	    public void insert(int data) {
 	        Node newNode = new Node(data);
-	        if (head == null) {
-	            head = newNode;
-	            return;
+	        if (head == null) head = tail = newNode;
+	        else {
+	            tail.next = newNode;
+	            newNode.prev = tail;
+	            tail = newNode;
 	        }
-	        Node temp = head;
-	        while (temp.next != null) temp = temp.next;
-	        temp.next = newNode;
-	        newNode.prev = temp;
+	        size++;
 	    }
 	    public void deleteMiddle() {
-	        if (head == null) return;
-
-	        Node slow = head, fast = head;
-	        while (fast != null && fast.next != null) {
-	            slow = slow.next;
-	            fast = fast.next.next;
+	        if (head == null) return; 
+	        int mid = size / 2;
+	        Node curr = head;
+	        for (int i = 0; i < mid; i++) {
+	            curr = curr.next;
 	        }
-
-	        if (slow.prev != null) slow.prev.next = slow.next;
-	        else head = slow.next;
-
-	        if (slow.next != null) slow.next.prev = slow.prev;
+	        if (curr.prev != null)
+	            curr.prev.next = curr.next;
+	        else
+	            head = curr.next;  
+	        if (curr.next != null)
+	            curr.next.prev = curr.prev;
+	        else
+	            tail = curr.prev; 
+	        size--;
 	    }
-	    public void printList() {
-	        Node temp = head;
-	        while (temp != null) {
-	            System.out.print(temp.data + " ");
-	            temp = temp.next;
+	    public void traverse() {
+	        Node curr = head;
+	        while (curr != null) {
+	            System.out.print(curr.data + " ");
+	            curr = curr.next;
 	        }
 	        System.out.println();
 	    }
-	}
-	public class Task3{
 	    public static void main(String[] args) {
-	        DoublyLinkedList list = new DoublyLinkedList();
-	        list.insert(1);
-	        list.insert(2);
-	        list.insert(3);
-	        list.insert(4);
-	        list.insert(5);
-	        System.out.println("Original List:");
-	        list.printList();
+	        Task3 list = new Task3();
+	        Scanner sc = new Scanner(System.in);
+	        System.out.print("Number of elements: ");
+	        int n = sc.nextInt();
+	        for (int i = 0; i < n; i++) {
+	            list.insert(sc.nextInt());
+	        }
+	        System.out.print("List before deleting middle: ");
+	        list.traverse();
 	        list.deleteMiddle();
-	        System.out.println("List after deleting the middle node:");
-	        list.printList();
+	        System.out.print("List after deleting middle: ");
+	        list.traverse();
+	        sc.close();
 	    }
 	}
-
